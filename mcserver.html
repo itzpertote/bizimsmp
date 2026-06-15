@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server IP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f7f6;
+        }
+
+        .copy-container {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            gap: 15px;
+        }
+
+        .text-to-copy {
+            font-size: 1.1rem;
+            color: #333333;
+            font-weight: 500;
+        }
+
+        .copy-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Spaces the icon and text nicely */
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .copy-btn.copied {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="copy-container">
+        <span class="text-to-copy" id="textTarget">bizimsmp3.mcsh.io</span>
+        
+        <button class="copy-btn" id="copyBtn" onclick="copyText()">
+            <i class="fa-regular fa-copy" id="btnIcon"></i>
+            <span id="btnText">Copy</span>
+        </button>
+    </div>
+
+    <script>
+        function copyText() {
+            const textToCopy = document.getElementById('textTarget').innerText;
+            const copyBtn = document.getElementById('copyBtn');
+            const btnIcon = document.getElementById('btnIcon');
+            const btnText = document.getElementById('btnText');
+
+            // Copy text using the Clipboard API
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // Change text and switch icon to a checkmark
+                btnText.innerText = 'Copied!';
+                btnIcon.className = 'fa-solid fa-check';
+                copyBtn.classList.add('copied');
+
+                // Reset back to original state after 2 seconds
+                setTimeout(() => {
+                    btnText.innerText = 'Copy';
+                    btnIcon.className = 'fa-regular fa-copy';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                alert('Oops, unable to copy');
+            });
+        }
+    </script>
+
+</body>
+</html>
